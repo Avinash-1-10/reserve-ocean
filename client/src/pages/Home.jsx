@@ -4,8 +4,6 @@ import { Box, Stack } from "@mui/material";
 import { menusTypes } from "../data/menuTypes";
 
 const Home = () => {
-  
-
   return (
     <Stack
       p={{ xs: 2, md: 5 }}

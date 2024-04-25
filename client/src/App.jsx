@@ -4,6 +4,7 @@ import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Navbar from "./components/Navbar";
+import Menu from "./pages/Menu";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/menu/:type" element={<Menu />} />
       </Routes>
     </BrowserRouter>
   );

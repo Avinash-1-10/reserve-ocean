@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Navbar from "./components/Navbar";
 import Menu from "./pages/Menu";
+import Categories from "./pages/Categories";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/categories" element={<Categories />} />
         <Route path="/menu/:type" element={<Menu />} />
       </Routes>
     </BrowserRouter>

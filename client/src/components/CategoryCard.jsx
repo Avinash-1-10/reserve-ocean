@@ -7,19 +7,15 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const MenuTypesCard = ({ title, description, imageUrl }) => {
+const CategoryCard = ({ name, image }) => {
   return (
-    <Card
-      sx={{ width: 345, boxShadow: 3, ":hover": { boxShadow: 6 } }}
-    >
+    <Card sx={{ width: 345, boxShadow: 3, ":hover": { boxShadow: 6 } }}>
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
-          image={
-            "https://images.pexels.com/photos/4669211/pexels-photo-4669211.jpeg?auto=compress&cs=tinysrgb&w=800"
-          }
-          alt={title}
+          height="200"
+          image={image}
+          alt={name}
           sx={{
             transition: "transform .2s",
             ":hover": {
@@ -28,8 +24,13 @@ const MenuTypesCard = ({ title, description, imageUrl }) => {
           }}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div" textAlign={"center"}>
-            {title}
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="div"
+            textAlign={"center"}
+          >
+            {name}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -37,4 +38,4 @@ const MenuTypesCard = ({ title, description, imageUrl }) => {
   );
 };
 
-export default MenuTypesCard;
+export default CategoryCard;

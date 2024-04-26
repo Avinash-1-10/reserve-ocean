@@ -1,23 +1,42 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Paper,
+  Box,
+  Grid,
+  Typography,
+} from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import axios from "axios";
 
 const SignUp = () => {
-  const handleSubmit = (event) => {
+  const [formData, setFormData] = useState({
+    name:"",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
+
+  const handlechange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  }
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    console.log("Hi")
+    try {
+      const {data} = await axios.post('/api/v1/user/signup', formData);
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
@@ -50,7 +69,7 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -66,20 +85,19 @@ const SignUp = () => {
               margin="normal"
               required
               fullWidth
-              id="name"
               label="Name"
               name="name"
-              autoComplete="name"
-              autoFocus
+              value={formData.name}
+              onChange={handlechange}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
               label="Email Address"
               name="email"
-              autoFocus
+              value={formData.email}
+              onChange={handlechange}
             />
             <TextField
               margin="normal"
@@ -87,8 +105,9 @@ const SignUp = () => {
               fullWidth
               name="password"
               label="Password"
-              type="password"
-              id="password"
+              type="password" 
+              value={formData.password}
+              onChange={handlechange}
             />
 
             <TextField
@@ -98,13 +117,15 @@ const SignUp = () => {
               name="confirmPassword"
               label="Confirm Password"
               type="password"
-              id="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handlechange}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               Sign Up
             </Button>

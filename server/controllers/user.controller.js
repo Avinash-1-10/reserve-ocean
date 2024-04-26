@@ -47,6 +47,7 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(email, password);
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
       return res.status(404).json(new ApiError(404, "User not found."));

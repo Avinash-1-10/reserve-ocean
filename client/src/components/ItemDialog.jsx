@@ -11,8 +11,11 @@ import RemoveIcon from "@mui/icons-material/Remove";
 export default function ItemDialog({
   open,
   setOpen,
-  productName,
+  name,
   price,
+  description,
+  category,
+  _id,
   image,
 }) {
   //   console.log(open);
@@ -32,19 +35,18 @@ export default function ItemDialog({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{productName}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{name}</DialogTitle>
         <DialogContent sx={{ display: { xs: "block", md: "flex" }, gap: 2 }}>
           <Box width={{ xs: "100%", md: "100%" }}>
             <img
-              src="https://images.pexels.com/photos/20788970/pexels-photo-20788970/free-photo-of-a-woman-sitting-on-a-couch-in-a-red-room.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load"
+              src={image}
               alt=""
               style={{ width: "100%", height: "250px", objectFit: "cover" }}
             />
           </Box>
           <Stack display={"flex"} flexDirection={"column"} gap={2}>
             <DialogContentText>
-              Classic Eggs Benedict featuring poached eggs, Canadian bacon, and
-              homemade hollandaise sauce served on a toasted English muffin.
+              {description}
             </DialogContentText>
             <Stack
               display={"flex"}
@@ -60,10 +62,10 @@ export default function ItemDialog({
                   color: "#d32f2f",
                 }}
               >
-                ${price}
+                {price}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                Breakfast
+                {category}
               </Typography>
             </Stack>
             <Stack

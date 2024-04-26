@@ -21,24 +21,22 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const MenuItemCard = ({ id, productName, price, image, category }) => {
+const MenuItemCard = ({ _id, name, price, image, category, description }) => {
   const [open, setOpen] = React.useState(false);
   return (
     <>
       <StyledCard sx={{ width: { md: 250, lg: 300 } }}>
         <CardMedia
           component="img"
-          image={
-            "https://images.pexels.com/photos/12557608/pexels-photo-12557608.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          }
-          alt={productName}
+          image={image}
+          alt={name}
           sx={{ height: 150 }}
         />
         <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
           <div>
-            <Typography variant="h6">{productName}</Typography>
+            <Typography variant="h6">{name}</Typography>
             <Typography variant="body2" color="text.secondary">
-              {category}
+              {category.name}
             </Typography>
           </div>
           <IconButton aria-label="add to cart">
@@ -64,9 +62,12 @@ const MenuItemCard = ({ id, productName, price, image, category }) => {
       <ItemDialog
         open={open}
         setOpen={setOpen}
-        productName={productName}
+        name={name}
         image={image}
         price={price}
+        description={description}
+        category={category.name}
+        _id={_id}
       />
     </>
   );

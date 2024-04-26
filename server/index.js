@@ -5,6 +5,7 @@ import connectDB from "./db/index.js";
 import cors from "cors";
 import userRouter from "./routes/user.routes.js";
 import categoryRouter from "./routes/category.routes.js";
+import menuItemRouter from "./routes/menuItem.routes.js";
 configDotenv();
 
 // Database connection
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/menuItem", menuItemRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

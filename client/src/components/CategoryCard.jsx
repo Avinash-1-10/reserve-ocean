@@ -8,12 +8,15 @@ import {
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const CategoryCard = ({ name, image }) => {
+const CategoryCard = ({_id, name, image }) => {
   const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(`/menu/${_id}`, { state: { id:_id } });
+  };
   return (
     <Card
       sx={{ width: 345, boxShadow: 3, ":hover": { boxShadow: 6 } }}
-      onClick={() => navigate(`/menu/${name}`)}
+      onClick={handleNavigate}
     >
       <CardActionArea>
         <CardMedia

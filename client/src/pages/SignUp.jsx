@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Avatar,
   Button,
@@ -10,32 +11,54 @@ import {
   Typography,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { useState } from "react";
 import axios from "axios";
+import Notification from "../components/Notification";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name:"",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
-  })
-
+  });
+  const [notify, setNotify] = useState({
+    open: false,
+    message: "",
+    type: "",
+  });
+  const [loading, setLoading] = useState(false);
   const handlechange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }));
-  }
-  const handleSubmit = async(event) => {
+  };
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Hi")
+    setLoading(true);
     try {
-      const {data} = await axios.post('/api/v1/user/signup', formData);
-      console.log(data)
+      const { data } = await axios.post("/api/v1/user/signup", formData);
+      localStorage.setItem("reserveAuthToken", data.data.reserveAuthToken);
+      localStorage.setItem("reserveUser", JSON.stringify(data.data.user));
+      setNotify({
+        open: true,
+        message: data.message,
+        type: "success",
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
-      console.log(error)
+      setNotify({
+        open: true,
+        message: error.response.data.message,
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,7 +128,7 @@ const SignUp = () => {
               fullWidth
               name="password"
               label="Password"
-              type="password" 
+              type="password"
               value={formData.password}
               onChange={handlechange}
             />
@@ -126,8 +149,9 @@ const SignUp = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={handleSubmit}
+              disabled={loading}
             >
-              Sign Up
+              {loading ? "Loading..." : "Sign Up"}
             </Button>
             <Grid container>
               <Grid item ml={"auto"}>
@@ -139,6 +163,7 @@ const SignUp = () => {
           </Box>
         </Box>
       </Grid>
+      <Notification notify={notify} setNotify={setNotify} />
     </Grid>
   );
 };

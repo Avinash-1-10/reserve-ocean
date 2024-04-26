@@ -12,12 +12,23 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useState } from "react";
 import axios from "axios";
+import Notification from "../components/Notification";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const [notify, setNotify] = useState({
+    open: false,
+    message: "",
+    type: "",
+  });
+
+  const [loading, setLoading] = useState(false);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -25,13 +36,29 @@ const SignIn = () => {
       [name]: value,
     }));
   };
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
-      const {data} = await axios.post('/api/v1/user/login', formData);
-      console.log(data)
+      const { data } = await axios.post("/api/v1/user/login", formData);
+      localStorage.setItem("reserveAuthToken", data.data.reserveAuthToken);
+      localStorage.setItem("reserveUser", JSON.stringify(data.data.user));
+      setNotify({
+        open: true,
+        message: data.message,
+        type: "success",
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
-      
+      setNotify({
+        open: true,
+        message: error.response.data.message,
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,8 +127,9 @@ const SignIn = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={handleSubmit}
+              disabled={loading}
             >
-              Sign In
+              {loading ? "Loading..." : "Sign In"}
             </Button>
             <Grid container>
               <Grid item ml={"auto"}>
@@ -113,6 +141,7 @@ const SignIn = () => {
           </Box>
         </Box>
       </Grid>
+      <Notification notify={notify} setNotify={setNotify} />
     </Grid>
   );
 };

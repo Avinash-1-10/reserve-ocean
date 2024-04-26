@@ -24,11 +24,11 @@ const signup = async (req, res) => {
     const user = await User.findById(newUser._id).select(
       "-password -createdAt -updatedAt -__v"
     );
-    const threadsToken = generateTokenAndSetCookies(user._id, res);
+    const reserveAuthToken = generateTokenAndSetCookies(user._id, res);
     return res.status(201).json(
       new ApiResponse(201, "Registration successful.", {
         user,
-        threadsToken,
+        reserveAuthToken,
       })
     );
   } catch (error) {
@@ -47,7 +47,6 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
       return res.status(404).json(new ApiError(404, "User not found."));
@@ -62,11 +61,11 @@ const login = async (req, res) => {
     const userData = await User.findById(existingUser._id).select(
       "-password -createdAt -updatedAt -__v"
     );
-    const threadsToken = generateTokenAndSetCookies(existingUser._id, res);
+    const reserveAuthToken = generateTokenAndSetCookies(existingUser._id, res);
     return res.status(200).json(
       new ApiResponse(200, "Logged in successfully.", {
         user: userData,
-        threadsToken,
+        reserveAuthToken,
       })
     );
   } catch (error) {
@@ -84,7 +83,7 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    res.cookie("threadsToken", "", { maxAge: 1 });
+    res.cookie("reserveAuthToken", "", { maxAge: 1 });
     return res
       .status(200)
       .json(new ApiResponse(200, "Logged out successfully."));

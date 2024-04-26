@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp";
 import Navbar from "./components/Navbar";
 import Menu from "./pages/Menu";
 import Categories from "./pages/Categories";
+import Cart from "./pages/Cart";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/menu/:type" element={<Menu />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </BrowserRouter>
   );

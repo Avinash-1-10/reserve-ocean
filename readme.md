@@ -2,12 +2,15 @@
 
 This is a Reservation System application built using the MERN stack. It features user authentication, item management, and a payment gateway integration.
 
+## Deployment Link: [https://reserve-ocean.vercel.app](https://reserve-ocean.vercel.app)
+## Dummy Card Number for Payments:** 5267 3181 8797 5449
+
 ## Features
 
 - **User Authentication:** Secure login with JSON Web Tokens (JWT).
 - **Item Management:** Ability to add new items.
 - **Purchase and Payment:** Integrated with Razorpay for processing payments.
-- **Dummy Card Number for Payments:** 5267 3181 8797 5449
+
 
 ## Installation
 

@@ -62,7 +62,7 @@ export default function ItemDialog({
                   color: "#d32f2f",
                 }}
               >
-                {price}
+                ₹{price}
               </Typography>
               <Typography variant="caption" color="text.secondary">
                 {category}

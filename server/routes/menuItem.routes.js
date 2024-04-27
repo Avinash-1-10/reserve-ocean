@@ -1,6 +1,10 @@
 import { Router } from "express";
 import verifyJwt from "../middlewares/auth.middleware.js";
-import { createMenuItem, getMenuItems, getMenuItemsByCategory } from "../controllers/menuItme.controller.js";
+import {
+  createMenuItem,
+  getMenuItems,
+  getMenuItemsByCategory,
+} from "../controllers/menuItme.controller.js";
 
 const router = Router();
 

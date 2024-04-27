@@ -45,7 +45,7 @@ const MenuItemCard = ({ _id, name, price, image, category, description }) => {
         </CardContent>
         <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="body1" fontWeight="bold">
-            ${price.toFixed(2)}
+            ₹{price.toFixed(2)}
           </Typography>
           <AddCircleIcon
             sx={{

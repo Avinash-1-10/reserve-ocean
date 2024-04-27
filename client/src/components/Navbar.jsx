@@ -11,10 +11,12 @@ import {
   Tooltip,
   Typography,
   MenuItem,
+  Badge,
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const pages = [];
 const settings = ["Logout"];
@@ -128,11 +130,15 @@ function Navbar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <Badge badgeContent={2} color="primary" sx={{ mr: 5 }}>
+              <ShoppingCartIcon color="white" sx={{fontSize: "26px"}} />
+            </Badge>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

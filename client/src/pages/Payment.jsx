@@ -25,7 +25,7 @@ const Payment = ({ calculateTotal }) => {
       return;
     }
     const response = await axios.get(
-      "https://reserve-ocean.onrender.com/api/v1/order/key",
+      "https://reserve-ocean.onrender.com/api/v1/order/key",{},
       {
         headers: {
           Authorization: `Bearer ${reserveAuthToken}`,

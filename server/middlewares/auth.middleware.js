@@ -6,7 +6,7 @@ const verifyJwt = async (req, res, next) => {
   try {
     const token =
       req.cookies?.threadsToken ||
-      req.headers["Authorization"]?.replace("Bearer ", "");
+      req.headers.authorization?.replace("Bearer ", "");
 
     if (!token) {
       return res

@@ -11,11 +11,15 @@ const LogoutButton = ({ notify, setNotify }) => {
 
   const handleLogout = async () => {
     try {
-      const { data } = await axios.post("https://reserve-ocean.onrender.com/api/v1/user/logout",{},{
-        headers: {
-          Authorization: `Bearer ${reserveAuthToken}`,
-        },
-      });
+      const { data } = await axios.post(
+        "https://reserve-ocean.onrender.com/api/v1/user/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${reserveAuthToken}`,
+          },
+        }
+      );
       localStorage.removeItem("reserveAuthToken");
       localStorage.removeItem("reserveUser");
       dispatch(clearUser());

@@ -105,8 +105,8 @@ const Cart = () => {
           height: "fit-content",
         }}
       >
-        <Payment calculateTotal={calculateTotal}/>
-        </Box>
+        <Payment calculateTotal={calculateTotal} />
+      </Box>
     </Box>
   );
 };

@@ -3,17 +3,15 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
 const Notification = ({ notify, setNotify }) => {
-  
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setNotify({
       ...notify,
-      open: false
+      open: false,
     });
   };
-
 
   return (
     <div>

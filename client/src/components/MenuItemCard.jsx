@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -11,6 +11,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DoneIcon from "@mui/icons-material/Done";
 import ItemDialog from "./ItemDialog";
 import { useSelector } from "react-redux";
+import Notification from "./Notification";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: theme.shape.borderRadiusMedium,
@@ -26,11 +27,16 @@ const StyledCard = styled(Card)(({ theme }) => ({
 const MenuItemCard = ({ _id, name, price, image, category, description }) => {
   const [open, setOpen] = React.useState(false);
   const cart = useSelector((state) => state.cart);
-
+  const [notify, setNotify] = useState({
+    open: false,
+    message: "",
+    type: "",
+  });
 
   return (
     <>
-      <StyledCard sx={{ width: { md: 250, lg: 300 } }}>
+      <Notification notify={notify} setNotify={setNotify} />
+      <StyledCard sx={{ width: { md: 250, lg: 270 } }}>
         <CardMedia
           component="img"
           image={image}
@@ -44,9 +50,7 @@ const MenuItemCard = ({ _id, name, price, image, category, description }) => {
               {category.name}
             </Typography>
           </div>
-          <IconButton aria-label="add to cart">
-            {/* Add your cart icon here */}
-          </IconButton>
+          <IconButton aria-label="add to cart"></IconButton>
         </CardContent>
         <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="body1" fontWeight="bold">
@@ -86,6 +90,8 @@ const MenuItemCard = ({ _id, name, price, image, category, description }) => {
         description={description}
         category={category.name}
         _id={_id}
+        notify={notify}
+        setNotify={setNotify}
       />
     </>
   );

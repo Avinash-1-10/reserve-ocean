@@ -1,12 +1,15 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import axios from "axios";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../redux/actions/cartActions";
 
 const Payment = ({ calculateTotal }) => {
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const items = cart.map((item) => ({
     item: item.item._id,
     quantity: item.quantity,
@@ -14,9 +17,13 @@ const Payment = ({ calculateTotal }) => {
   const user = useSelector((state) => state.user);
 
   const checkout = async (e) => {
+    setLoading(true);
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     const response = await axios.get("/api/v1/order/key");
     const key = response?.data.data;
-
     const { data } = await axios.post("/api/v1/order/checkout", {
       items,
       total: calculateTotal(),
@@ -24,6 +31,7 @@ const Payment = ({ calculateTotal }) => {
     const verify = async (info) => {
       const { data } = await axios.post("/api/v1/order/verify", info);
       if (data.status === 200) {
+        dispatch(clearCart());
         navigate("/payment-success");
       }
     };
@@ -46,8 +54,8 @@ const Payment = ({ calculateTotal }) => {
         await verify(info);
       },
       prefill: {
-        name: user.name,
-        email: user.email,
+        name: user?.name,
+        email: user?.email,
         contact: 1234567892,
       },
       notes: {
@@ -62,7 +70,7 @@ const Payment = ({ calculateTotal }) => {
       navigate("/payment-failed");
     });
     rzp1.open();
-
+    setLoading(false);
     e.preventDefault();
   };
   return (
@@ -76,8 +84,9 @@ const Payment = ({ calculateTotal }) => {
         color="primary"
         sx={{ mt: 3 }}
         onClick={checkout}
+        disabled={loading}
       >
-        Checkout
+        {loading ? "Loading..." : "Pay Now"}
       </Button>
     </>
   );

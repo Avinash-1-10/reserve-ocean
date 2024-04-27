@@ -56,7 +56,7 @@ function Navbar() {
                 textDecoration: "none",
               }}
             >
-              Hotel
+              Airport
             </Typography>
           </Link>
 

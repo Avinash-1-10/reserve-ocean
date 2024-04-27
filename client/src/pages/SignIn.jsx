@@ -3,7 +3,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  Link,
   Paper,
   Box,
   Grid,
@@ -13,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useState } from "react";
 import axios from "axios";
 import Notification from "../components/Notification";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/actions/userActions";
 
@@ -76,7 +75,7 @@ const SignIn = () => {
         md={7}
         sx={{
           backgroundImage:
-            "url(https://images.pexels.com/photos/19615650/pexels-photo-19615650/free-photo-of-tropical-hotel-with-palm-trees.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
+            "url(https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"
@@ -137,7 +136,7 @@ const SignIn = () => {
             </Button>
             <Grid container>
               <Grid item ml={"auto"}>
-                <Link href="#" variant="body2">
+                <Link to={"/signup"}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

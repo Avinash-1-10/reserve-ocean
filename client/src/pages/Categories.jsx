@@ -29,7 +29,7 @@ const Categories = () => {
         flexWrap="wrap"
         justifyContent="center"
       >
-        {[1,2,3,4,5,6,7,8,9].map((_,i) => (
+        {[1, 2, 3, 4, 5, 6].map((_, i) => (
           <Skeleton key={i} variant="rectangular" width={345} height={250} />
         ))}
       </Stack>

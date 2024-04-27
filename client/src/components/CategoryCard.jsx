@@ -8,10 +8,10 @@ import {
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const CategoryCard = ({_id, name, image }) => {
+const CategoryCard = ({ _id, name, image }) => {
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate(`/menu/${_id}`, { state: { id:_id } });
+    navigate(`/menu/${_id}`, { state: { id: _id } });
   };
   return (
     <Card

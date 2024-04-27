@@ -7,7 +7,7 @@ const generateTokenAndSetCookies = (userId, res) => {
 
   res.cookie("threadsToken", token, {
     httpOnly: true,
-    maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
+    maxAge: 15 * 24 * 60 * 60 * 1000,
     sameSite: "strict",
   });
 

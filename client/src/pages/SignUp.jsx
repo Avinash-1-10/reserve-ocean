@@ -4,7 +4,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  Link,
   Paper,
   Box,
   Grid,
@@ -13,7 +12,7 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
 import Notification from "../components/Notification";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/actions/userActions";
 
@@ -87,7 +86,7 @@ const SignUp = () => {
         md={7}
         sx={{
           backgroundImage:
-            "url(https://images.pexels.com/photos/19615650/pexels-photo-19615650/free-photo-of-tropical-hotel-with-palm-trees.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
+            "url(https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"
@@ -168,9 +167,7 @@ const SignUp = () => {
             </Button>
             <Grid container>
               <Grid item ml={"auto"}>
-                <Link href="#" variant="body2">
-                  {"Already have an account? Sign In"}
-                </Link>
+                <Link to="/login">{"Already have an account? Sign In"}</Link>
               </Grid>
             </Grid>
           </Box>

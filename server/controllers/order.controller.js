@@ -5,7 +5,7 @@ import crypto from "crypto";
 import instance from "../utils/razorpay.js";
 
 const checkout = async (req, res) => {
-    console.log("checkout api")
+  console.log("checkout api");
   try {
     const { items, total } = req.body;
     const owner = req.user;
@@ -63,7 +63,7 @@ const verifyPayment = async (req, res) => {
     const isSignatureValid = calculatedSignature === razorpay_signature;
     if (isSignatureValid) {
       const order = await Order.findById(newOrderId);
-      console.log(order)
+      console.log(order);
       if (order) {
         order.paymentStatus = "Paid";
         order.paymentId = razorpay_payment_id;

@@ -21,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/menuItem", menuItemRouter);

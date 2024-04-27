@@ -24,6 +24,8 @@ export default function ItemDialog({
   category,
   _id,
   image,
+  notify,
+  setNotify,
 }) {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
@@ -32,7 +34,12 @@ export default function ItemDialog({
   };
 
   const handleSubmit = () => {
-    dispatch(addToCart({ item: { _id, name,image, price }, quantity }));
+    dispatch(addToCart({ item: { _id, name, image, price }, quantity }));
+    setNotify({
+      open: true,
+      message: `${quantity} ${name} Added to cart`,
+      type: "success",
+    });
     handleClose();
   };
 

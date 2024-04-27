@@ -1,13 +1,15 @@
 import express from "express";
-import verifyJwt from "../middlewares/auth.middleware";
+import verifyJwt from "../middlewares/auth.middleware.js";
 import {
   checkout,
   getKey,
   verifyPayment,
-} from "../controllers/order.controller";
+} from "../controllers/order.controller.js";
 
 const router = express.Router();
 
-router.post("/chekout", verifyJwt, checkout);
+router.post("/checkout", verifyJwt, checkout);
 router.post("/verify", verifyPayment);
-router.key("/key", verifyJwt, getKey);
+router.get("/key", verifyJwt, getKey);
+
+export default router;

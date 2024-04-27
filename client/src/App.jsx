@@ -7,11 +7,13 @@ import Navbar from "./components/Navbar";
 import Menu from "./pages/Menu";
 import Categories from "./pages/Categories";
 import Cart from "./pages/Cart";
+import Success from "./pages/Success";
+import Fail from "./pages/Fail";
 
 const App = () => {
   return (
     <BrowserRouter>
-    <Navbar/>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<SignIn />} />
@@ -19,6 +21,8 @@ const App = () => {
         <Route path="/categories" element={<Categories />} />
         <Route path="/menu/:type" element={<Menu />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/payment-success" element={<Success />} />
+        <Route path="/payment-failed" element={<Fail />} />
       </Routes>
     </BrowserRouter>
   );

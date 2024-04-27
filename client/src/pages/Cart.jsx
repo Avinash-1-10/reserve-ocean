@@ -13,13 +13,13 @@ import {
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
-import cartItems from "../data/cartItems";
 import { useDispatch, useSelector } from "react-redux";
 import {
   decrease,
   increase,
   removeFromCart,
 } from "../redux/actions/cartActions";
+import Payment from "./Payment";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -105,14 +105,8 @@ const Cart = () => {
           height: "fit-content",
         }}
       >
-        <Typography variant="h4" sx={{ mb: 2 }}>
-          Total Cost
-        </Typography>
-        <Typography variant="h5">₹{calculateTotal()}</Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 3 }}>
-          Checkout
-        </Button>
-      </Box>
+        <Payment calculateTotal={calculateTotal}/>
+        </Box>
     </Box>
   );
 };

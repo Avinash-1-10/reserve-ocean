@@ -5,21 +5,22 @@ import crypto from "crypto";
 import instance from "../utils/razorpay.js";
 
 const checkout = async (req, res) => {
+    console.log("checkout api")
   try {
     const { items, total } = req.body;
-    const user = req.user;
+    const owner = req.user;
 
     if (!items || !total) {
       return res.status(400).json(new ApiError(400, "Invalid request."));
     }
     const options = {
-      amount: Number(amount * 100),
+      amount: Number(total * 100),
       currency: "INR",
     };
     const order = await instance.orders.create(options);
     if (order) {
       const newOrder = new Order({
-        user: user._id,
+        owner: owner._id,
         items: items,
         total: total,
       });
@@ -32,7 +33,7 @@ const checkout = async (req, res) => {
       );
     }
   } catch (error) {
-    console.error("Error during order creation: ", error);
+    console.error("Error during order creation: ", error.message);
     return res
       .status(500)
       .json(
@@ -62,6 +63,7 @@ const verifyPayment = async (req, res) => {
     const isSignatureValid = calculatedSignature === razorpay_signature;
     if (isSignatureValid) {
       const order = await Order.findById(newOrderId);
+      console.log(order)
       if (order) {
         order.paymentStatus = "Paid";
         order.paymentId = razorpay_payment_id;

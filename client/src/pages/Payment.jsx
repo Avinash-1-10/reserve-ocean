@@ -84,7 +84,7 @@ const Payment = ({ calculateTotal }) => {
         color="primary"
         sx={{ mt: 3 }}
         onClick={checkout}
-        disabled={loading}
+        disabled={loading || cart.length === 0 || calculateTotal() === 0}
       >
         {loading ? "Loading..." : "Pay Now"}
       </Button>

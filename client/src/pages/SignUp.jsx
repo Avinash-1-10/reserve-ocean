@@ -44,6 +44,15 @@ const SignUp = () => {
     event.preventDefault();
     setLoading(true);
     try {
+      if (formData.password !== formData.confirmPassword) {
+        setNotify({
+          open: true,
+          message: "Passwords do not match",
+          type: "error",
+        });
+        setLoading(false)
+        return;
+      }
       const { data } = await axios.post("/api/v1/user/signup", formData);
       dispatch(setUser(data.data.user));
       localStorage.setItem("reserveAuthToken", data.data.reserveAuthToken);

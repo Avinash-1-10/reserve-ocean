@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Skeleton, Stack } from "@mui/material";
+import { Box, Skeleton, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import CategoryCard from "../components/CategoryCard";
 
@@ -35,17 +35,23 @@ const Categories = () => {
       </Stack>
     );
   return (
-    <Stack
-      p={{ xs: 2, md: 5 }}
-      flexDirection="row"
-      gap={5}
-      flexWrap="wrap"
-      justifyContent="center"
-    >
-      {categories.map((menu, index) => (
-        <CategoryCard key={index} {...menu} />
-      ))}
-    </Stack>
+    <>
+      {categories.length === 0 ? (
+        <Typography variant="h4" textAlign={"center"} pt={3}>No categories found</Typography>
+      ) : (
+        <Stack
+          p={{ xs: 2, md: 5 }}
+          flexDirection="row"
+          gap={5}
+          flexWrap="wrap"
+          justifyContent="center"
+        >
+          {categories.map((menu, index) => (
+            <CategoryCard key={index} {...menu} />
+          ))}
+        </Stack>
+      )}
+    </>
   );
 };
 

@@ -20,6 +20,7 @@ import {
   removeFromCart,
 } from "../redux/actions/cartActions";
 import Payment from "./Payment";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,27 @@ const Cart = () => {
     );
     return total.toFixed(2);
   };
+
+  if (cart.length === 0) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          p: 3,
+          boxShadow: 3,
+          height: "fit-content",
+        }}
+      >
+        <Typography variant="h5">Cart is Empty</Typography>
+        <Typography variant="body1">Add some items to your cart</Typography>
+        <Link to={"/categories"}>
+          <Button variant="contained" sx={{ mt: 3 }}>Shop Now</Button>
+        </Link>
+      </Box>
+    );
+  }
   return (
     <Box
       sx={{

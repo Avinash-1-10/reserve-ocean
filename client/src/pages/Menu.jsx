@@ -13,7 +13,7 @@ const Menu = () => {
   const getMenuItems = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`/api/v1/menuItem/category/${catId}`);
+      const { data } = await axios.get(`https://reserve-ocean.onrender.com/api/v1/menuItem/category/${catId}`);
       setMenuItems(data.data);
     } catch (error) {
       console.log(error);

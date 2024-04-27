@@ -53,7 +53,7 @@ const SignUp = () => {
         setLoading(false)
         return;
       }
-      const { data } = await axios.post("/api/v1/user/signup", formData);
+      const { data } = await axios.post("https://reserve-ocean.onrender.com/api/v1/user/signup", formData);
       dispatch(setUser(data.data.user));
       localStorage.setItem("reserveAuthToken", data.data.reserveAuthToken);
       localStorage.setItem("reserveUser", JSON.stringify(data.data.user));

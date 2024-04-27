@@ -22,14 +22,14 @@ const Payment = ({ calculateTotal }) => {
       navigate("/login");
       return;
     }
-    const response = await axios.get("/api/v1/order/key");
+    const response = await axios.get("https://reserve-ocean.onrender.com/api/v1/order/key");
     const key = response?.data.data;
-    const { data } = await axios.post("/api/v1/order/checkout", {
+    const { data } = await axios.post("https://reserve-ocean.onrender.com/api/v1/order/checkout", {
       items,
       total: calculateTotal(),
     });
     const verify = async (info) => {
-      const { data } = await axios.post("/api/v1/order/verify", info);
+      const { data } = await axios.post("https://reserve-ocean.onrender.com/api/v1/order/verify", info);
       if (data.status === 200) {
         dispatch(clearCart());
         navigate("/payment-success");

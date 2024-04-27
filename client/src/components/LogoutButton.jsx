@@ -10,7 +10,7 @@ const LogoutButton = ({ notify, setNotify }) => {
 
   const handleLogout = async () => {
     try {
-      const { data } = await axios.post("/api/v1/user/logout");
+      const { data } = await axios.post("https://reserve-ocean.onrender.com/api/v1/user/logout");
       localStorage.removeItem("reserveAuthToken");
       localStorage.removeItem("reserveUser");
       dispatch(clearUser());

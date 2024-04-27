@@ -1,13 +1,20 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import {
+  Button,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { addToCart } from "../redux/actions/cartActions";
 export default function ItemDialog({
   open,
   setOpen,
@@ -18,17 +25,19 @@ export default function ItemDialog({
   _id,
   image,
 }) {
-  //   console.log(open);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
   const handleClose = () => {
     setOpen(false);
   };
 
+  const handleSubmit = () => {
+    dispatch(addToCart({ item: { _id, name,image, price }, quantity }));
+    handleClose();
+  };
+
   return (
-    <React.Fragment>
+    <>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -45,9 +54,7 @@ export default function ItemDialog({
             />
           </Box>
           <Stack display={"flex"} flexDirection={"column"} gap={2}>
-            <DialogContentText>
-              {description}
-            </DialogContentText>
+            <DialogContentText>{description}</DialogContentText>
             <Stack
               display={"flex"}
               flexDirection={"row"}
@@ -83,15 +90,19 @@ export default function ItemDialog({
               <IconButton
                 color="secondary"
                 sx={{ bgcolor: "#ffebee", "&:hover": { bgcolor: "#ffebee" } }}
+                onClick={() => setQuantity(quantity - 1)}
+                disabled={quantity === 1}
               >
                 <RemoveIcon />
               </IconButton>
               <Typography fontFamily={"sans-serif"} fontSize={"1.3rem"}>
-                1
+                {quantity}
               </Typography>
               <IconButton
                 color="primary"
                 sx={{ bgcolor: "#e3f2fd", "&:hover": { bgcolor: "#e3f2fd" } }}
+                onClick={() => setQuantity(quantity + 1)}
+                disabled={quantity === 5}
               >
                 <AddIcon />
               </IconButton>
@@ -100,9 +111,9 @@ export default function ItemDialog({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          <Button onClick={handleClose}>Add To Cart</Button>
+          <Button onClick={handleSubmit}>Add To Cart</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

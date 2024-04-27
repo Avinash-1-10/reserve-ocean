@@ -14,9 +14,16 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import cartItems from "../data/cartItems";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decrease,
+  increase,
+  removeFromCart,
+} from "../redux/actions/cartActions";
 
 const Cart = () => {
-  const [items, setItems] = useState([...cartItems, ...cartItems]);
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart) || [];
 
   const handleQuantityChange = (id, delta) => {
     setItems((currentItems) =>
@@ -31,9 +38,12 @@ const Cart = () => {
   };
 
   const calculateTotal = () => {
-    return items.reduce((total, item) => total + item.quantity * item.price, 0);
+    const total = cart.reduce(
+      (total, item) => total + item.item.price * item.quantity,
+      0
+    );
+    return total.toFixed(2);
   };
-
   return (
     <Box
       sx={{
@@ -44,37 +54,39 @@ const Cart = () => {
       }}
     >
       <Box sx={{ flex: 2, display: "flex", flexDirection: "column", gap: 2 }}>
-        {items.map((item, index) => (
+        {cart.map((item, index) => (
           <Card
             key={index}
             sx={{ display: "flex", alignItems: "center", gap: 2 }}
           >
             <CardMedia
               component="img"
-              sx={{height: 125, width:125, objectFit:"cover" }}
-              image={"https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=800"}
-              alt={item.title}
+              sx={{ height: 125, width: 125, objectFit: "cover" }}
+              image={item.item.image}
+              alt={item.item.name}
             />
             <CardContent sx={{ flex: "1 0 auto" }}>
-              <Typography variant="h6">{item.title}</Typography>
-              <Typography variant="body2">Price: ${item.price}</Typography>
+              <Typography variant="h6">{item.item.name}</Typography>
+              <Typography variant="body2">Price: ₹{item.item.price}</Typography>
               <Stack direction="row" alignItems="center" spacing={1}>
                 <IconButton
-                  onClick={() => handleQuantityChange(item.id, -1)}
                   disabled={item.quantity <= 1}
+                  onClick={() => dispatch(decrease(item.item._id))}
                 >
                   <RemoveCircleOutlineIcon />
                 </IconButton>
                 <Typography>{item.quantity}</Typography>
-                <IconButton onClick={() => handleQuantityChange(item.id, 1)}>
+                <IconButton
+                  disabled={item.quantity == 5}
+                  onClick={() => dispatch(increase(item.item._id))}
+                >
                   <AddCircleOutlineIcon />
                 </IconButton>
               </Stack>
             </CardContent>
             <CardActions>
               <IconButton
-                onClick={() => handleRemoveItem(item.id)}
-                aria-label="delete"
+                onClick={() => dispatch(removeFromCart(item.item._id))}
               >
                 <DeleteIcon />
               </IconButton>
@@ -90,13 +102,13 @@ const Cart = () => {
           alignItems: "center",
           p: 3,
           boxShadow: 3,
-          height:"fit-content",
+          height: "fit-content",
         }}
       >
         <Typography variant="h4" sx={{ mb: 2 }}>
           Total Cost
         </Typography>
-        <Typography variant="h5">${calculateTotal()}</Typography>
+        <Typography variant="h5">₹{calculateTotal()}</Typography>
         <Button variant="contained" color="primary" sx={{ mt: 3 }}>
           Checkout
         </Button>

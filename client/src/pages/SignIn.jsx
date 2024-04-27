@@ -14,9 +14,12 @@ import { useState } from "react";
 import axios from "axios";
 import Notification from "../components/Notification";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/actions/userActions";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -41,6 +44,7 @@ const SignIn = () => {
     setLoading(true);
     try {
       const { data } = await axios.post("/api/v1/user/login", formData);
+      dispatch(setUser(data.data.user));
       localStorage.setItem("reserveAuthToken", data.data.reserveAuthToken);
       localStorage.setItem("reserveUser", JSON.stringify(data.data.user));
       setNotify({

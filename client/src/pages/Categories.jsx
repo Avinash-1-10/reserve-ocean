@@ -9,7 +9,7 @@ const Categories = () => {
   const getCategories = async () => {
     seLoading(true);
     try {
-      const { data } = await axios.get("/api/v1/categories");
+      const { data } = await axios.get("https://reserve-ocean.onrender.com/api/v1/categories");
       setCategories(data.data);
     } catch (error) {
       console.log(error);

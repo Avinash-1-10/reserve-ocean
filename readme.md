@@ -24,7 +24,7 @@ Follow these steps to set up and run the project:
 To get started, clone the repository to your local machine:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Avinash-1-10/reserve-ocean>
 ```
 
 ### Setup Backend

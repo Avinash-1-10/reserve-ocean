@@ -7,10 +7,15 @@ import Notification from "./Notification";
 
 const LogoutButton = ({ notify, setNotify }) => {
   const dispatch = useDispatch();
+  const reserveAuthToken = localStorage.getItem("reserveAuthToken");
 
   const handleLogout = async () => {
     try {
-      const { data } = await axios.post("https://reserve-ocean.onrender.com/api/v1/user/logout");
+      const { data } = await axios.post("https://reserve-ocean.onrender.com/api/v1/user/logout",{},{
+        headers: {
+          Authorization: `Bearer ${reserveAuthToken}`,
+        },
+      });
       localStorage.removeItem("reserveAuthToken");
       localStorage.removeItem("reserveUser");
       dispatch(clearUser());

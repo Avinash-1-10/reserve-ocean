@@ -15,6 +15,8 @@ const Payment = ({ calculateTotal }) => {
     quantity: item.quantity,
   }));
   const user = useSelector((state) => state.user);
+  const reserveAuthToken = localStorage.getItem("reserveAuthToken");
+  console.log(reserveAuthToken);
 
   const checkout = async (e) => {
     setLoading(true);
@@ -22,14 +24,32 @@ const Payment = ({ calculateTotal }) => {
       navigate("/login");
       return;
     }
-    const response = await axios.get("https://reserve-ocean.onrender.com/api/v1/order/key");
+    const response = await axios.get(
+      "https://reserve-ocean.onrender.com/api/v1/order/key",
+      {
+        headers: {
+          Authorization: `Bearer ${reserveAuthToken}`,
+        },
+      }
+    );
     const key = response?.data.data;
-    const { data } = await axios.post("https://reserve-ocean.onrender.com/api/v1/order/checkout", {
-      items,
-      total: calculateTotal(),
-    });
+    const { data } = await axios.post(
+      "https://reserve-ocean.onrender.com/api/v1/order/checkout",
+      {
+        items,
+        total: calculateTotal(),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${reserveAuthToken}`,
+        },
+      }
+    );
     const verify = async (info) => {
-      const { data } = await axios.post("https://reserve-ocean.onrender.com/api/v1/order/verify", info);
+      const { data } = await axios.post(
+        "https://reserve-ocean.onrender.com/api/v1/order/verify",
+        info
+      );
       if (data.status === 200) {
         dispatch(clearCart());
         navigate("/payment-success");

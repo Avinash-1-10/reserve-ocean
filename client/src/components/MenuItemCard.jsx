@@ -8,7 +8,9 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DoneIcon from "@mui/icons-material/Done";
 import ItemDialog from "./ItemDialog";
+import { useSelector } from "react-redux";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: theme.shape.borderRadiusMedium,
@@ -23,6 +25,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
 
 const MenuItemCard = ({ _id, name, price, image, category, description }) => {
   const [open, setOpen] = React.useState(false);
+  const cart = useSelector((state) => state.cart);
+
+
   return (
     <>
       <StyledCard sx={{ width: { md: 250, lg: 300 } }}>
@@ -47,16 +52,29 @@ const MenuItemCard = ({ _id, name, price, image, category, description }) => {
           <Typography variant="body1" fontWeight="bold">
             ₹{price.toFixed(2)}
           </Typography>
-          <AddCircleIcon
-            sx={{
-              color: "green",
-              fontSize: "30px",
-              cursor: "pointer",
-              ":hover": { color: "green.800" },
-              transition: "color 0.3s ease-in-out",
-            }}
-            onClick={() => setOpen(true)}
-          />
+          {!cart.some((item) => item.item._id === _id) ? (
+            <IconButton
+              sx={{
+                color: "green",
+                fontSize: "30px",
+                cursor: "pointer",
+                ":hover": { color: "green.800" },
+                transition: "color 0.3s ease-in-out",
+              }}
+              onClick={() => setOpen(true)}
+            >
+              <AddCircleIcon />
+            </IconButton>
+          ) : (
+            <IconButton
+              sx={{
+                fontSize: "30px",
+                cursor: "not-allowed",
+              }}
+            >
+              <DoneIcon />
+            </IconButton>
+          )}
         </CardContent>
       </StyledCard>
       <ItemDialog

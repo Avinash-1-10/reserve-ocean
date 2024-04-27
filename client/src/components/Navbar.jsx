@@ -9,21 +9,28 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  MenuItem,
   Badge,
+  Button,
 } from "@mui/material";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-const settings = ["Logout"];
+import LogoutButton from "./LogoutButton";
+import Notification from "./Notification";
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const productCount = useSelector((state) => state.cart.length);
-  console.log(productCount);
+  const [notify, setNotify] = React.useState({
+    open: false,
+    message: "",
+    type: "",
+  });
+  const user =
+    useSelector((state) => state.user) ||
+    JSON.parse(localStorage.getItem("reserveUser"));
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -79,7 +86,9 @@ function Navbar() {
             </Link>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar sx={{ bgcolor: "orange" }}>
+                  {user?.name.slice(0, 1)}
+                </Avatar>
               </IconButton>
             </Tooltip>
 
@@ -99,15 +108,21 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <Typography sx={{ px: 1, fontWeight: "bold" }}>
+                {user?.name}
+              </Typography>
+              {user ? (
+                <LogoutButton setNotify={setNotify} notify={notify} />
+              ) : (
+                <Link to={"/login"}>
+                  <Button>Login</Button>
+                </Link>
+              )}
             </Menu>
           </Box>
         </Toolbar>
       </Container>
+      <Notification setNotify={setNotify} notify={notify} />
     </AppBar>
   );
 }

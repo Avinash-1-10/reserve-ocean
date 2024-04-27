@@ -3,6 +3,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
 const Notification = ({ notify, setNotify }) => {
+  
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -12,6 +13,7 @@ const Notification = ({ notify, setNotify }) => {
       open: false
     });
   };
+
 
   return (
     <div>

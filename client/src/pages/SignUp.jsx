@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Button,
@@ -14,9 +14,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
 import Notification from "../components/Notification";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/actions/userActions";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,6 +32,7 @@ const SignUp = () => {
     type: "",
   });
   const [loading, setLoading] = useState(false);
+
   const handlechange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -36,11 +40,13 @@ const SignUp = () => {
       [name]: value,
     }));
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     try {
       const { data } = await axios.post("/api/v1/user/signup", formData);
+      dispatch(setUser(data.data.user));
       localStorage.setItem("reserveAuthToken", data.data.reserveAuthToken);
       localStorage.setItem("reserveUser", JSON.stringify(data.data.user));
       setNotify({
@@ -51,16 +57,25 @@ const SignUp = () => {
       setTimeout(() => {
         navigate("/");
       }, 1000);
+      console.log(1);
     } catch (error) {
       setNotify({
         open: true,
-        message: error.response.data.message,
+        message: error.response?.data.message || "An unknown error occurred",
         type: "error",
       });
     } finally {
       setLoading(false);
     }
   };
+
+  React.useEffect(() => {
+    if (notify.open && notify.type === "success") {
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
+  }, [notify, navigate]);
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -132,7 +147,6 @@ const SignUp = () => {
               value={formData.password}
               onChange={handlechange}
             />
-
             <TextField
               margin="normal"
               required
@@ -148,7 +162,6 @@ const SignUp = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleSubmit}
               disabled={loading}
             >
               {loading ? "Loading..." : "Sign Up"}
